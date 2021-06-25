@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.beans.Product;
 import com.example.demo.exceptions.LoginException;
 import com.example.demo.exceptions.SupplyException;
+import com.example.demo.exceptions.AlreadyExistsException;
 import com.example.demo.exceptions.itemNotFoundException;
 
 @Service
@@ -43,20 +43,24 @@ public class AdminFacade extends UserFacade {
 		stock.save(pr);
 	}
 
-	public void depositItems(int itemNo, int amountToDeposit) throws itemNotFoundException{
+	public void depositItems(int itemNo, int amountToDeposit) throws itemNotFoundException {
 		Product pr = stock.findById(itemNo).orElseThrow(itemNotFoundException::new);
 		pr.setAmount(pr.getAmount() + amountToDeposit);
 		stock.save(pr);
 	}
 
-	public void addItem(Product item)  {
+	public void addItem(Product item) throws AlreadyExistsException {
+		for (Product p : (getAllItems()))
+			if (item.getInventoryCode().equalsIgnoreCase(p.getInventoryCode())
+					|| item.getTitle().equalsIgnoreCase(p.getTitle()))
+				throw new AlreadyExistsException();
 		stock.save(item);
 	}
 
-	public void deleteItem(int itemNo) {
+	public void deleteItem(int itemNo) throws itemNotFoundException {
+		if(stock.existsById(itemNo))
 		stock.deleteById(itemNo);
+		else throw new itemNotFoundException();
 	}
-	
-
 
 }

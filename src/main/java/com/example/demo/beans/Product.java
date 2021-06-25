@@ -62,7 +62,21 @@ public class Product {
 		return itemNo;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Product) {
+			Product p = (Product) obj;
+			if (p.getId() == this.itemNo) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
-	
+	// if you override equals you have to override hashcode. they are linked
+	@Override
+	public int hashCode() {
+		return (int) itemNo + title.hashCode();
+	}
 
 }

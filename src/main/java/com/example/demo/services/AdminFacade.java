@@ -50,10 +50,11 @@ public class AdminFacade extends UserFacade {
 	}
 
 	public void addItem(Product item) throws AlreadyExistsException {
-		for (Product p : (getAllItems()))
-			if (item.getInventoryCode().equalsIgnoreCase(p.getInventoryCode())
-					|| item.getTitle().equalsIgnoreCase(p.getTitle()))
+		for (Product p : (getAllItems())) {
+			if ( item.getInventoryCode().equalsIgnoreCase(p.getInventoryCode()) ||item.getTitle().equalsIgnoreCase(p.getTitle())) {
 				throw new AlreadyExistsException();
+			}
+		}
 		stock.save(item);
 	}
 

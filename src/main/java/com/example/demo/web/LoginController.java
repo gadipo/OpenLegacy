@@ -31,7 +31,7 @@ public class LoginController {
 		this.service = service;
 	}
 	
-	@GetMapping("{email}/{password}/{type}")
+	@GetMapping("{email}/{password}")
 	public ResponseEntity<?> login(@PathVariable String email, @PathVariable String password) {
 		try {
 			// user authentication and appropriate Business Logic delivery

@@ -58,15 +58,27 @@ public class Product {
 		this.inventoryCode = inventoryCode;
 	}
 
-	public int getId() {
+	public int getItemNo() {
 		return itemNo;
 	}
+
+	public void setItemNo(int itemNo) {
+		this.itemNo = itemNo;
+	}
 	
+	
+
+	@Override
+	public String toString() {
+		return "Product [itemNo=" + itemNo + ", title=" + title + ", amount=" + amount + ", inventoryCode="
+				+ inventoryCode + "]";
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Product) {
 			Product p = (Product) obj;
-			if (p.getId() == this.itemNo) {
+			if (p.getItemNo() == this.itemNo) {
 				return true;
 			}
 		}

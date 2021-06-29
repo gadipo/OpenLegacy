@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +21,6 @@ import com.example.demo.beans.Product;
 import com.example.demo.exceptions.NoSessionFoundException;
 import com.example.demo.exceptions.SessionTimeOutException;
 import com.example.demo.services.AdminFacade;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 
 
@@ -79,8 +78,9 @@ public class AdminController {
 	@PostMapping("addItem/{token}")
 	public ResponseEntity<?> addItem(@PathVariable String token, @RequestBody Product item){
 		try {
+			System.out.println(item);
 			AdminFacade admin = (AdminFacade) checkSession(token).getFacade();
-			admin.addItem(item);;
+			admin.addItem(item);
 			return ResponseEntity.ok(item.getTitle()+" was added !");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

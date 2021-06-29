@@ -78,7 +78,6 @@ public class AdminController {
 	@PostMapping("addItem/{token}")
 	public ResponseEntity<?> addItem(@PathVariable String token, @RequestBody Product item){
 		try {
-			System.out.println(item);
 			AdminFacade admin = (AdminFacade) checkSession(token).getFacade();
 			admin.addItem(item);
 			return ResponseEntity.ok(item.getTitle()+" was added !");
